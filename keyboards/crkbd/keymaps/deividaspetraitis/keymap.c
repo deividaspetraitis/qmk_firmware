@@ -91,12 +91,28 @@ enum custom_keycodes {
   MSCRL
 };
 
-#define KC_LOWER     LOWER
-#define KC_RAISE     RAISE
-#define KC_BTCK      BTCK
-#define KC_MSCRL     MSCRL
-#define KC_MBTN1     MBTN1
-#define KC_MBTN2     MBTN2
+#define KC_LOWER  LOWER
+#define KC_LOWER1  KC_ESC(KC_LOWER)
+#define KC_RAISE  RAISE
+#define KC_BTCK   BTCK
+#define KC_MSCRL  MSCRL
+#define KC_MBTN1  MBTN1
+#define KC_MBTN2  MBTN2
+#define TD_CLN    TD(CT_CLN)
+#define TD_LSHFT  TD(TD_LSFT)
+#define KC_LOWESC LT(_LOWER, KC_ESC)
+
+// Left-hand home row mods
+#define HOME_A LGUI_T(KC_A)
+#define HOME_O RALT_T(KC_O)
+#define HOME_E LSFT_T(KC_E)
+#define HOME_U LCTL_T(KC_U)
+
+// Right-hand home row mods
+#define HOME_H RCTL_T(KC_H)
+#define HOME_T RSFT_T(KC_T)
+#define HOME_N LALT_T(KC_N)
+#define HOME_S RGUI_T(KC_S)
 
 #define KC_RST   QK_BOOT
 #define KC_LRST  RGBRST
@@ -109,29 +125,28 @@ enum custom_keycodes {
 #define KC_LVAD  RGB_VAD
 #define KC_LMOD  RGB_MOD
 
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_DVORAK] = LAYOUT_split_3x6_3(
-  //,------------------------------------------------------------.                    ,-----------------------------------------------------.
-     KC_LGUI,        TD(CT_CLN), KC_COMM, KC_DOT,  KC_P,    KC_Y,                         KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_BSPC,
-  //|---------------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     XXXXXXX,        KC_A,    KC_O,    KC_E,    KC_U,    KC_I,                         KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_BSLS,
-  //|---------------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     TD(TD_LSFT),    KC_QUOT, KC_Q,    KC_J,    KC_K,    KC_X,                         KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_SLSH,
-  //|---------------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                         KC_LOWER, CTL_T(KC_ESC), SFT_T(KC_SPC),     KC_ENT, TD(TD_RAISE), KC_RALT
-                                      //`---------------------------------'  `--------------------------'
+  //,-----------------------------------------------------.                          ,-----------------------------------------------------.
+     KC_GRAVE, TD_CLN,  KC_COMM, KC_DOT,  KC_P,    KC_Y,                               KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_BSPC,
+  //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
+     XXXXXXX, HOME_A,  HOME_O,  HOME_E,  HOME_U,  KC_I,                               KC_D,    HOME_H,  HOME_T,  HOME_N,  HOME_S,  KC_BSLS,
+  //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
+     TD_LSHFT,KC_QUOT, KC_Q,    KC_J,    KC_K,    KC_X,                               KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_SLSH,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                XXXXXXX, KC_LOWESC, KC_SPC,   KC_ENT,  KC_RAISE,XXXXXXX
+                               //`---------------------------------'  '--------------------------'
   ),
 
   [_LOWER] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                          ,-----------------------------------------------------.
      KC_7,    KC_5,    KC_3,    KC_1,    KC_9,    KC_0,                               KC_2,    KC_4,    KC_6,    KC_8,    KC_RGHT, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     KC_BTCK, XXXXXXX, KC_MSCRL,KC_MBTN1,KC_MBTN2,XXXXXXX,                            XXXXXXX, KC_LEFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+     XXXXXXX, XXXXXXX, KC_MSCRL,KC_MBTN1,KC_MBTN2,XXXXXXX,                            XXXXXXX, KC_LEFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
      XXXXXXX, XXXXXXX, XXXXXXX, KC_DOWN, KC_UP,   XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MINS, KC_TAB,
   //|--------+--------+--------+--------+--------+-----------------+------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, CTL_T(KC_ESC),  SFT_T(KC_SPC),     KC_ENT,   TD(TD_RAISE), KC_RALT
+                                          _______, KC_LOWESC,  SFT_T(KC_SPC),     KC_ENT,   KC_RAISE, KC_RALT
                                       //`--------------------------'            `--------------------------'
   ),
 
@@ -139,11 +154,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
      XXXXXXX, KC_AMPR, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_EQL,  KC_ASTR, XXXXXXX, KC_PLUS, KC_DLR,  KC_EXLM,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     KC_TILD, XXXXXXX, XXXXXXX, TD(CT_RBRC), TD(CT_LBRC), XXXXXXX,                      KC_PERC, KC_CIRC, XXXXXXX, XXXXXXX, KC_AT,   KC_HASH,
+     XXXXXXX, XXXXXXX, XXXXXXX, TD(CT_RBRC), TD(CT_LBRC), XXXXXXX,                      KC_PERC, KC_CIRC, XXXXXXX, XXXXXXX, KC_AT,   KC_HASH,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      XXXXXXX, XXXXXXX, XXXXXXX, KC_RPRN, KC_LPRN, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                         KC_LOWER,CTL_T(KC_ESC),SFT_T(KC_SPC),     KC_ENT,  _______, KC_RALT
+                                         _______,KC_LOWESC,SFT_T(KC_SPC),     _______,  KC_RAISE, KC_RALT
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -246,14 +261,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         persistent_default_layer_set(1UL<<_DVORAK);
       }
       return false;
-    case KC_LOWER:
-      if (record->event.pressed) {
+	case LT(_LOWER, KC_ESC):
+      if (record->tap.count && record->event.pressed) {
+		tap_code16(KC_ESC);
+	  } else if (record->event.pressed) {
         layer_on(_LOWER);
         update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
-      } else {
+	  } else {
         layer_off(_LOWER);
         update_tri_layer_RGB(_LOWER, _RAISE, _ADJUST);
-      }
+	  }
 	  return false;
     case KC_RAISE:
       if (record->event.pressed) {

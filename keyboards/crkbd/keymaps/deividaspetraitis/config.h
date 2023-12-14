@@ -25,8 +25,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 /* Select half side for flashing */
-#define HALF_LEFT
-/* #define HALF_RIGHT */
+/* #define HALF_LEFT */
+#define HALF_RIGHT
 
 /* #define TAPPING_FORCE_HOLD */
 #define TAPPING_TERM 175
@@ -36,11 +36,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* Select hand configuration */
 #define MASTER_RIGHT
 
-#define USE_SERIAL_PD2
-
-#undef RGBLED_NUM
 #define RGBLIGHT_ANIMATIONS
-#define RGBLED_NUM 27
+#define ENABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE
 #define RGBLIGHT_LIMIT_VAL 120
 #define RGBLIGHT_HUE_STEP 10
 #define RGBLIGHT_SAT_STEP 17
@@ -61,10 +58,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_COL_PINS { F4, F5, F6, F7, B7, D5 }
 
 /* ws2812 RGB LED */
-#undef RGB_DI_PIN
-#define RGB_DI_PIN B5
-#endif
-
-#ifdef HALF_RIGHT
-#define SSD1306OLED
+#undef WS2812_DI_PIN
+#define WS2812_DI_PIN B5
 #endif
